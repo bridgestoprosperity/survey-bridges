@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>ELMA Funded Bridges</title>
+    <title>RCT Bridge Sites</title>
     <meta
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css"
-      rel="stylesheet"
+      rel="stylesheet" 
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
     <link href="./style.css" rel="stylesheet" />
@@ -20,7 +20,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" href="./images/b2plogo.ico">
+    <link rel="icon" href="./assets/b2plogo.ico">
   </head>
 
   <body>
@@ -28,29 +28,55 @@
     <!-- create a div in the upper left corner that is styled like date-box -->
     <div id="map-panel" class="map-panel">
 
-          <!-- add an image to this div ./images/b2plogo -->
-        <img src="./images/b2plogo.png" alt="B2P Logo" class = "panel-logo" id="panel-logo"/>
-        <img src="./images/elmalogo.png" alt="B2P Logo" class = "panel-logo" id="panel-logo"/>
-
         <div>
           <form>
+            <input type="checkbox" id="layer-visibility" style="line-height:400%"> Satellite View </input>
+            <br>
+            <br>
             <label>
-              <input type="radio" name="radioGroup" value="visible" checked>
-              All Bridges
+              <input type="radio" name="radioGroup" value="all" checked>
+              All Bridges and Sites
             </label>
             <br>
             <label>
-              <input type="radio" name="radioGroup" value="none">
-              ELMA Funded Bridges Only
+              <input type="radio" name="radioGroup" value="Identified">
+              Identified Site
             </label>
+            <br>
+            <label>
+              <input type="radio" name="radioGroup" value="Prospecting">
+              Prospecting Site
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="radioGroup" value="Confirmed">
+              Confirmed Bridge Sites
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="radioGroup" value="Under Construction">
+              Under Construction
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="radioGroup" value="Complete">
+              Completed Bridge
+            </label>
+            <br>
+            <label>
+              <input type="radio" name="radioGroup" value="Rejected">
+              Rejected Site (Control)
+            </label>
+            <br>
           </form>
           <br>
-          <input type="checkbox" id="layer-visibility"> Satellite View
         </div>
         <div>
             <!-- horizontal line -->
             <hr></hr>
             <sourcefont> Source: Bridges to Prosperity Database </sourcefont>
+            <img src="./assets/b2plogo.png" alt="B2P Logo" class = "panel-logo" id="panel-logo"/>
+            <!-- <img src="./assets/elmalogo.png" alt="CU Logo" class = "panel-logo" id="panel-logo"/> -->
             <!-- <sourcefont> Date: 12/15/2022</sourcefont> -->
         </div>
     </div>

@@ -3,18 +3,21 @@ mapboxgl.accessToken =
 const map = new mapboxgl.Map({
   container: "map", // container ID
   // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-  style: "mapbox://styles/highestroad/clbpcmf7n001915mm30k360wh", // style URL
+  style: "mapbox://styles/highestroad/clbxb5afl000314qqmhh54sm4", // style URL
   center: [29.736, -1.975], // starting position [lng, lat]
   zoom: 8.1, // starting zoom
   pitch: 0,
   hash: true,
 });
-8.1/-2.264/29.736/-35.2
 
 map.on("load", () => {
   $('input[type=radio]').change(function() {
     console.log($(this).val() + ' selected');
-    map.setLayoutProperty('otherbridges', 'visibility', $(this).val());
+    if ($(this).val() == 'all') {
+      map.setFilter('survey-bridges', null);
+    } else {
+      map.setFilter('survey-bridges', ["all", ["match", ["get", "Stage"], [$(this).val()], true, false]]);
+    }
   });
 
   $('#layer-visibility').change(function() {
@@ -27,31 +30,31 @@ map.on("load", () => {
     }
   });
 
-  map.on("click", "elmabridges", (e) => {
+  map.on("click", "survey-bridges", (e) => {
     new mapboxgl.Popup()
       .setLngLat(e.lngLat)
-      .setHTML("Bridge Name: " + e.features[0].properties["Bridge Name"] + "<br>Bridge Type: " + e.features[0].properties["Bridge Type"] + "<br>Bridge Span: " + e.features[0].properties["Span (m)"] + " meters" + "<br>Completion Date: " + e.features[0].properties["Close Date"])
-      .addTo(map);
-  });
-  map.on("click", "otherbridges", (e) => {
-    new mapboxgl.Popup()
-      .setLngLat(e.lngLat)
-      .setHTML("Bridge Name: " + e.features[0].properties["Bridge Name"] + "<br>Bridge Type: " + e.features[0].properties["Bridge Type"] + "<br>Bridge Span: " + e.features[0].properties["Span (m)"] + " meters")
+      .setHTML(
+        "Stage: " + e.features[0].properties["Stage"] +
+        "<br>Bridge Name: " + e.features[0].properties["Bridge Name"] +
+        "<br>Location: " + e.features[0].properties["latitude"] + ", " + e.features[0].properties["longitude"] +
+        "<br>District: " + e.features[0].properties["Level 2 Government"] + 
+        "<br>Village: " + e.features[0].properties["Level 4 Government"] 
+        )
       .addTo(map);
   });
 
-  // Change the cursor to a pointer when
-  // the mouse is over the states layer.
-  map.on("mouseenter", ["otherbridges", "elmabridges"], () => {
+  map.on("mouseenter", ["survey-bridges"], () => {
     map.getCanvas().style.cursor = "pointer";
   });
 
   // Change the cursor back to a pointer
   // when it leaves the states layer.
-  map.on("mouseleave", ["otherbridges", "elmabridges"], () => {
+  map.on("mouseleave", ["elmabridges"], () => {
     map.getCanvas().style.cursor = "";
   });
   "Bridge Name"
 "Bridge Type"
 "Span (m)"
 });
+
+// District, site name, village name would be great.  

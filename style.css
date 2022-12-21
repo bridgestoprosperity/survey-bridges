@@ -48,11 +48,13 @@ sourcefont {
     and give it a background color */
 #map-panel {
   font-family: "Montserrat", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
   position: absolute;
   top: 0;
   left: 0;
-  padding: 10px;
+  padding: 5px;
   background-color: rgba(255, 255, 255, 0.5);
   filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.5));
   margin: 10px;
@@ -77,11 +79,11 @@ sourcefont {
   /* css to make images next to each other and 200 px wide */
   display: inline-block;
   /* width: 200px; */
-  height: 80px;
+  height: 20px;
   margin: 0px;
-  padding: 15px;
-  /* center images */
-  /* text-align: center; */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
 }
 
 .block {
