@@ -4,10 +4,10 @@ const map = new mapboxgl.Map({
   container: "map", // container ID
   // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
   style: "mapbox://styles/highestroad/clbxb5afl000314qqmhh54sm4", // style URL
-  center: [29.736, -1.975], // starting position [lng, lat]
-  zoom: 8.1, // starting zoom
-  pitch: 0,
-  hash: true,
+  center: [29.771, -2.182], // starting position [lng, lat]
+  zoom: 8.13, // starting zoom
+  pitch: 33,
+  // hash: true,
 });
 
 map.on("load", () => {
@@ -49,7 +49,7 @@ map.on("load", () => {
 
   // Change the cursor back to a pointer
   // when it leaves the states layer.
-  map.on("mouseleave", ["elmabridges"], () => {
+  map.on("mouseleave", ["survey-bridges"], () => {
     map.getCanvas().style.cursor = "";
   });
   "Bridge Name"
