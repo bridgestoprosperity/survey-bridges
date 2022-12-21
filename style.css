@@ -71,7 +71,7 @@ sourcefont {
 
 .mapboxgl-popup {
   max-width: 400px;
-  font: "Montserrat", sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: 1000;
 }
 
