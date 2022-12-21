@@ -79,10 +79,10 @@ sourcefont {
   /* css to make images next to each other and 200 px wide */
   display: inline-block;
   /* width: 200px; */
-  height: 20px;
+  height: 30px;
   margin: 0px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 1px;
+  padding-right: 1px;
   padding-top: 5px;
 }
 
