@@ -9,6 +9,8 @@ const map = new mapboxgl.Map({
   pitch: 33,
   // hash: true,
 });
+const nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-right');
 
 map.on("load", () => {
   $('input[type=radio]').change(function() {
