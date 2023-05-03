@@ -1,102 +1,133 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>RCT Bridge Sites</title>
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css"
-      rel="stylesheet" 
-    />
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
-    <link href="./style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="./assets/b2plogo.ico">
-  </head>
 
-  <body>
-    <div id="map"></div>
-    <!-- create a div in the upper left corner that is styled like date-box -->
-    <div id="map-panel" class="map-panel">
+<head>
+  <meta charset="utf-8" />
+  <title>RCT Bridge Sites</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+  <link href="./style.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="./assets/b2plogo.ico">
+  <!-- add bootswatch css -->
+  <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+</head>
 
-        <div>
-          <form>
-            <input type="checkbox" id="layer-visibility" style="line-height:400%"> Satellite View </input>
-            <br>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="all" checked> All Bridges and Sites
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Identified">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#919FC7"/>
-              </svg>
-              Identified Site
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Prospecting">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#5878A3"/>
-              </svg>
-              Prospecting Site
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Confirmed">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#E7CA60"/>
-              </svg>
-              Confirmed Bridge Sites
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Under Construction">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#85B5B2"/>
-              </svg>
-              Under Construction
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Complete">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#6A9F58"/>
-              </svg>
-              Completed Bridge
-            </label>
-            <br>
-            <label>
-              <input type="radio" name="radioGroup" value="Rejected">
-              <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z" fill="#E49344"/>
-              </svg>
-              Rejected Site (Control)
-            </label>
-            <br>
-          </form>
-          <br>
+<body>
+  <div id="map"></div>
+
+  <div class="card border-primary m-3 shadow-lg" id="map-card" style="max-width: 17rem; opacity: 0.9;">
+    <div class="card-header">RCT Bridge Site map</div>
+    <div class="p-2">
+      <fieldset class="form-group">
+        <legend class="mb-0">Filters</legend>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="all-bridges" value="all-bridges"
+            checked="">
+          <label class="form-check-label" for="all-bridges">
+            All Bridges and Sites
+          </label>
         </div>
-        <div>
-            <!-- horizontal line -->
-            <hr></hr>
-            <sourcefont> Source: Bridges to Prosperity Database </sourcefont>
-            <img src="./assets/b2pleft.png" alt="B2P Logo" class = "panel-logo" id="panel-logo"/>
-            <img src="./assets/Mortensoncenter_left.png" alt="CU Logo" class = "panel-logo" id="panel-logo"/>
-            <!-- <sourcefont> Date: 12/15/2022</sourcefont> -->
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="identified-sites"
+            value="Identified">
+          <label class="form-check-label" for="identified-sites"">
+            <svg width=" 10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+              fill="#919FC7" />
+            </svg>
+            Identified Sites
+          </label>
         </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="prospecting-sites"
+            value="Prospecting">
+          <label class="form-check-label" for="prospecting-sites">
+            <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+                fill="#5878A3" />
+            </svg>
+            Prospecting Sites
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="confirmed-sites" value="Confirmed">
+          <label class="form-check-label" for="confirmed-sites">
+            <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+                fill="#E7CA60" />
+            </svg>
+            Confirmed Bridge Sites
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="under-construction"
+            value="Under Construction">
+          <label class="form-check-label" for="under-construction">
+            <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+                fill="#85B5B2" />
+            </svg>
+            Under Construction
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="completed-bridges"
+            value="Complete">
+          <label class="form-check-label" for="completed-bridges">
+            <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+                fill="#6A9F58" />
+            </svg>
+            Completed Bridges
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="layer-radios" id="rejected-sites" value="Rejected">
+          <label class="form-check-label" for="rejected-sites">
+            <svg width="10pt" height="10pt" version="1.1" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m24.648 54.289 25.352 38.461 25.352-38.461c4.0352-6.1289 5.7148-13.516 4.7266-20.789s-4.582-13.941-10.113-18.77c-5.5273-4.8242-12.621-7.4883-19.961-7.4883s-14.43 2.6641-19.961 7.4883c-5.5273 4.8281-9.1211 11.496-10.109 18.77-0.99219 7.2734 0.6875 14.66 4.7266 20.789zm25.352-32.289c4.0664 0 7.9648 1.6133 10.84 4.4883s4.4883 6.7773 4.4883 10.84c0 4.0664-1.6133 7.9688-4.4883 10.844-2.875 2.8711-6.7734 4.4883-10.84 4.4883s-7.9648-1.6172-10.84-4.4883c-2.875-2.875-4.4883-6.7773-4.4883-10.844 0.003906-4.0625 1.6211-7.957 4.4922-10.832 2.875-2.875 6.7734-4.4922 10.836-4.4961z"
+                fill="#E49344" />
+            </svg>
+            Rejected Sites (Control)
+          </label>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <legend class="mb-0 mt-2">View Options</legend>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="sat-view">
+          <label class="form-check-label" for="sat-view">Satellite View</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="3d-view" checked="">
+          <label class="form-check-label" for="3d-view">3D View</label>
+        </div>
+      </fieldset>
+      <hr class="p-0">
+      <div class="pt-0">
+        <sourcefont> Source: Bridges to Prosperity Database </sourcefont>
+      </div>
+      <div class="text-center">
+        <img src="./assets/b2pleft.png" alt="B2P Logo" class="panel-logo" id="panel-logo" />
+        <img src="./assets/Mortensoncenter_left.png" alt="CU Logo" class="panel-logo" id="panel-logo" />
+      </div>
     </div>
-    <script src="./index.js"></script>
-  </body>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="./index.js"></script>
+</body>
+
 </html>

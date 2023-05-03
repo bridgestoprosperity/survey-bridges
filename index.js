@@ -12,7 +12,6 @@ const map = new mapboxgl.Map({
 
 map.on("load", () => {
   $('input[type=radio]').change(function() {
-    console.log($(this).val() + ' selected');
     if ($(this).val() == 'all') {
       map.setFilter('survey-bridges', null);
     } else {
@@ -20,13 +19,27 @@ map.on("load", () => {
     }
   });
 
-  $('#layer-visibility').change(function() {
+  // if the id 'sat-view' is checked, show the satellite layer if unchecked hide satellite layer
+
+  $('#sat-view').change(function() {
     if ($(this).is(':checked')) {
-      // Show the layer
       map.setLayoutProperty('satellite', 'visibility', 'visible');
     } else {
-      // Hide the layer
       map.setLayoutProperty('satellite', 'visibility', 'none');
+    }
+  });
+  // if 3d-view is checked angle map to 33 degrees if unchecked angle map to 0 degrees
+  $('#3d-view').change(function() {
+    if ($(this).is(':checked')) {
+      map.easeTo({
+        pitch: 33,
+        duration: 1000,
+      });
+    } else {
+      map.easeTo({
+        pitch: 0,
+        duration: 1000,
+      });
     }
   });
 
