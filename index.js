@@ -9,6 +9,7 @@ const map = new mapboxgl.Map({
   pitch: 33,
   // hash: true,
 });
+
 const nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-right');
 
@@ -21,8 +22,6 @@ map.on("load", () => {
     }
   });
 
-  // if the id 'sat-view' is checked, show the satellite layer if unchecked hide satellite layer
-
   $('#sat-view').change(function() {
     if ($(this).is(':checked')) {
       map.setLayoutProperty('satellite', 'visibility', 'visible');
@@ -30,7 +29,7 @@ map.on("load", () => {
       map.setLayoutProperty('satellite', 'visibility', 'none');
     }
   });
-  // if 3d-view is checked angle map to 33 degrees if unchecked angle map to 0 degrees
+
   $('#3d-view').change(function() {
     if ($(this).is(':checked')) {
       map.easeTo({
