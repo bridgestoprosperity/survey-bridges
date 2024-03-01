@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Display a map on a webpage</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYnJpZGdlc3RvcHJvc3Blcml0eSIsImEiOiJjajRpd2sxeGQwMjU5MnhxajJkNzZnODZtIn0.UrOwxq6A1Zl2yvwzYxBudQ';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            center: [29.8739, -1.9403],
+            zoom: 9 // starting zoom
+        });
+        // on load add three geojson sources data/bridge-sites.geojson, data/buffered_bridge_sites.geojson, data/rwa_survey_villages_small.geojson
+        map.on('load', () => {
+            map.addSource('bridge-sites', {
+                type: 'geojson',
+                data: './data/bridge-sites.geojson'
+            });
+            map.addSource('buffered-bridge-sites', {
+                type: 'geojson',
+                data: './data/buffered_bridge_sites.geojson'
+            });
+            map.addSource('rwa-survey-villages', {
+                type: 'geojson',
+                data: './data/rwa_survey_villages_small.geojson'
+            });
+            // add layer for bridge sites
+            map.addLayer({
+                id: 'bridge-sites',
+                type: 'circle',
+                source: 'bridge-sites',
+                paint: {
+                    'circle-radius': 6,
+                    'circle-color': '#EBC64D',
+                }
+            });
+            // add layer for buffered bridge sites
+            map.addLayer({
+                id: 'buffered-bridge-sites',
+                type: 'fill',
+                source: 'buffered-bridge-sites',
+                paint: {
+                    'fill-color': '#E49344',
+                    'fill-opacity': 0.3,
+
+                }
+            });
+            // add layer for rwa survey villages
+            map.addLayer({
+                id: 'rwa-survey-villages',
+                type: 'fill',
+                source: 'rwa-survey-villages',
+                paint: {
+                    'fill-color': '#3A0648',
+                    //   make fill opacity to be coorilated with the value of "Home" value 0, for 0, 0.1 for 1, 0.2 for 2-5, 0.4 for 5-15, 0.6 for 15-30, 0.8 for 30-50, 1 for 50+
+                    'fill-opacity': [
+                        'case',
+                        ['==', ['get', 'Home'], 0], 0,
+                        ['==', ['get', 'Home'], 1], 0.1,
+                        ['<=', ['get', 'Home'], 5], 0.2, // Implies > 1 and <= 5
+                        ['<=', ['get', 'Home'], 15], 0.4, // Implies > 5 and <= 15
+                        ['<=', ['get', 'Home'], 30], 0.6, // Implies > 15 and <= 30
+                        ['<=', ['get', 'Home'], 50], 0.8, // Implies > 30 and <= 50
+                        ['>', ['get', 'Home'], 50], 1,
+                        /* Default case if none of the above conditions are met */
+                        0 // You might want to define a default opacity
+                    ]
+
+                }
+            });
+            // on hover show the value of Home for that village along with the value of Origin, and Destination and remove when mouse moves off
+            map.on('mousemove', 'rwa-survey-villages', (e) => {
+                
+                const properties = e.features[0].properties;
+                // Ensure coordinates are in [lng, lat] format
+                let coordinates = e.features[0].geometry.coordinates.slice()[0][0];
+                // Debugging log
+                console.log(coordinates);
+
+                // Assuming coordinates is always [lng, lat] as expected for Point geometries
+                const description = `<h3>Home: ${properties.Home}</h3><p>Origin: ${properties.Origin}</p><p>Destination: ${properties.Destination}</p>`;
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates) // This expects [lng, lat]
+                    .setHTML(description)
+                    .addTo(map);
+            });
+            
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'rwa-survey-villages', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'rwa-survey-villages', () => {
+                map.getCanvas().style.cursor = '';
+
+            });
+            
+
+        });
+    </script>
+
+</body>
+
+</html>
