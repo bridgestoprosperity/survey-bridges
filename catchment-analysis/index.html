@@ -31,6 +31,12 @@
             center: [29.8739, -1.9403],
             zoom: 9 // starting zoom
         });
+
+        // Create a popup, but don't add it to the map yet.
+        const popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
         // on load add three geojson sources data/bridge-sites.geojson, data/buffered_bridge_sites.geojson, data/rwa_survey_villages_small.geojson
         map.on('load', () => {
             map.addSource('bridge-sites', {
@@ -63,7 +69,6 @@
                 paint: {
                     'fill-color': '#E49344',
                     'fill-opacity': 0.3,
-
                 }
             });
             // add layer for rwa survey villages
@@ -89,35 +94,32 @@
 
                 }
             });
+
             // on hover show the value of Home for that village along with the value of Origin, and Destination and remove when mouse moves off
             map.on('mousemove', 'rwa-survey-villages', (e) => {
-                
-                const properties = e.features[0].properties;
-                // Ensure coordinates are in [lng, lat] format
-                let coordinates = e.features[0].geometry.coordinates.slice()[0][0];
-                // Debugging log
-                console.log(coordinates);
+                // Change the cursor style as a UI indicator.
+                map.getCanvas().style.cursor = 'pointer';
 
-                // Assuming coordinates is always [lng, lat] as expected for Point geometries
+                const features = e.features;
+                if (!features.length) return;
+
+                const feature = features[0];
+
+                // Ensure coordinates are in [lng, lat] format
+                let coordinates = feature.geometry.coordinates.slice()[0][0];
+                if (coordinates.length > 2) {
+                    coordinates = coordinates[0];  // Take the first point of the polygon
+                }
+
+                const properties = feature.properties;
                 const description = `<h3>Home: ${properties.Home}</h3><p>Origin: ${properties.Origin}</p><p>Destination: ${properties.Destination}</p>`;
 
-                new mapboxgl.Popup()
-                    .setLngLat(coordinates) // This expects [lng, lat]
-                    .setHTML(description)
-                    .addTo(map);
+                popup.setLngLat(coordinates).setHTML(description).addTo(map);
             });
-            
-            // Change the cursor to a pointer when the mouse is over the places layer.
-            map.on('mouseenter', 'rwa-survey-villages', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-            // Change it back to a pointer when it leaves.
             map.on('mouseleave', 'rwa-survey-villages', () => {
                 map.getCanvas().style.cursor = '';
-
+                popup.remove();
             });
-            
-
         });
     </script>
 
